@@ -4,21 +4,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DBConnection {
-    private static Connection connection = null;
+    // TiDB connection URL format
+    private static final String URL = "jdbc:mysql://gateway01.ap-southeast-1.prod.aws.tidbcloud.com:4000/sys?sslmode=require";
+    private static final String USER = "BKprZ3q3Y4Jtu24.root";
+    private static final String PASSWORD = "tWJ1lDDnTFUbZxfD"; // Jo password generate hua
 
     public static Connection getConnection() {
+        Connection con = null;
         try {
-            if (connection == null || connection.isClosed()) {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/news_website?useSSL=false&allowPublicKeyRetrieval=true",
-                    "root",
-                    "" // <-- Yahan apna MySQL password likhein
-                );
-            }
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return connection;
+        return con;
     }
 }
